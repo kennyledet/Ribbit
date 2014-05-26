@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -17,7 +18,8 @@ import com.parse.ParseUser;
 
 
 public class LoginActivity extends Activity {
-    protected EditText mUsername, mPassword, mEmail;
+    protected TextView mForgotPassword;
+    protected EditText mUsername, mPassword;
     protected Button mLoginBtn, mRegisterBtn;
 
 
@@ -33,6 +35,15 @@ public class LoginActivity extends Activity {
         mUsername.requestFocus();
 
         mPassword = (EditText) findViewById(R.id.passwordField);
+        mForgotPassword = (TextView) findViewById(R.id.forgotPassword);
+
+        mForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPassword.class);
+                startActivity(forgotPasswordIntent);
+            }
+        });
 
         mLoginBtn = (Button) findViewById(R.id.loginBtn);
         mRegisterBtn = (Button) findViewById(R.id.registerBtn);
