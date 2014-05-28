@@ -16,6 +16,7 @@ public class InboxFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
         return rootView;
     }
@@ -26,7 +27,4 @@ public class InboxFragment extends ListFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-
-
 }

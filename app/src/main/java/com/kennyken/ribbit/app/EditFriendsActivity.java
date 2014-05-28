@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -87,13 +86,6 @@ public class EditFriendsActivity extends ListActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit_friends, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
         int id = item.getItemId();
@@ -121,12 +113,12 @@ public class EditFriendsActivity extends ListActivity {
         if ( getListView().isItemChecked(position) ) {
             // Add clicked user to current user's friends relation
             mFriendsRelation.add(mUsers.get(position));
-            mCurrentUser.saveInBackground(saveCallback);
         } else {
             // Remove friend
             mFriendsRelation.remove(mUsers.get(position));
-            mCurrentUser.saveInBackground(saveCallback);
         }
+        mCurrentUser.saveInBackground(saveCallback);
+
     }
 
     private void addFriendCheckmarks() {

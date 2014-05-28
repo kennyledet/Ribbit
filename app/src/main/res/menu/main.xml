@@ -2,11 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.kennyken.ribbit.app.MainActivity" >
-    <item android:id="@+id/action_logout"
-        android:title="@string/logout"
-        android:orderInCategory="100" />
+
+
+    <item
+        android:title="@string/action_camera_label"
+        android:id="@+id/action_camera"
+        android:icon="@drawable/ic_action_camera"
+        app:showAsAction="always" />
 
     <item android:id="@+id/action_edit_friends"
         android:title="@string/edit_friends_label"
         />
+
+    <item android:id="@+id/action_logout"
+        android:title="@string/logout"
+        android:orderInCategory="100" />
 </menu>
