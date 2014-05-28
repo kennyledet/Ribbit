@@ -27,4 +27,12 @@
     <string name="title_activity_edit_friends">Edit Friends</string>
     <string name="users_query_error">Error getting users!</string>
     <string name="action_camera_label">Camera</string>
+    <string name="external_storage_error">Error accessing external storage!</string>
+
+    <string-array name="camera_choices">
+        <item>Take Picture</item>
+        <item>Take Video</item>
+        <item>Choose Picture</item>
+        <item>Choose Video</item>
+    </string-array>
 </resources>

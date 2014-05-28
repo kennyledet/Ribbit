@@ -1,9 +1,14 @@
 package com.kennyken.ribbit.app;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,10 +16,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -34,8 +44,96 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      */
     ViewPager mViewPager;
 
+    //public String appName = getString(R.string.app_name);
     public String TAG = MainActivity.class.getSimpleName();
     public ParseUser currentUser;
+
+    public static final int TAKE_PHOTO_REQUEST = 0;
+    public static final int TAKE_VIDEO_REQUEST = 0;
+    public static final int PICK_PHOTO_REQUEST = 0;
+    public static final int PICK_VIDEO_REQUEST = 0;
+
+    public static final int MEDIA_TYPE_IMAGE = 4;
+    public static final int MEDIA_TYPE_VIDEO = 5;
+
+    protected Uri mMediaUri;
+
+
+    protected DialogInterface.OnClickListener mCameraDialogListener =
+            new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int which) {
+            switch ( which ) {
+                case 0:  // take picture
+                    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    // set where to save images
+                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                    if (mMediaUri == null) {
+                        Toast.makeText(MainActivity.this,
+                                R.string.external_storage_error,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                        startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+                    }
+                    break;
+                case 1:  // take video
+                    break;
+                case 2:  // choose picture
+                    break;
+                case 3:  // choose video
+                    break;
+            }
+        }
+    };
+
+    private Uri getOutputMediaFileUri(int mediaType) {
+        if ( isExternalStorageAvailable() ) {
+            // get external storage directory
+            File mediaStorageDir = new File(
+                    Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES),
+                    getString(R.string.app_name)
+            );
+
+            // create subdirectory
+            if ( ! mediaStorageDir.exists() ) {
+                if ( ! mediaStorageDir.mkdirs() ) {
+                    Log.e(TAG, "Failed to create directory");
+                    return null;
+                }
+            }
+
+            // create file name with timestamp
+            File mediaFile;
+
+            Date now = new Date();
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+
+            String path = mediaStorageDir.getPath() + File.separator;
+            switch (mediaType) {
+                case MEDIA_TYPE_IMAGE:
+                    mediaFile = new File(path + "IMG_" + timestamp + ".jpg");
+                    break;
+                case MEDIA_TYPE_VIDEO:
+                    mediaFile = new File(path + "VID_" + timestamp + ".mp4");
+                    break;
+                default:
+                    return null;
+            }
+
+            Log.d(TAG, "File: " + Uri.fromFile(mediaFile));
+            return Uri.fromFile(mediaFile);
+        } else {
+            return null;
+        }
+    }
+
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED) ? true : false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +221,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 Intent editFriendsIntent = new Intent(this, EditFriendsActivity.class);
                 startActivity(editFriendsIntent);
                 return true;
+            case R.id.action_camera:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setItems(R.array.camera_choices, mCameraDialogListener);
+                AlertDialog dialog = builder.create();
+                dialog.show();
         }
 
 
