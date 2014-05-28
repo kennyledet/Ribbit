@@ -32,7 +32,11 @@
         <activity
             android:name="com.kennyken.ribbit.app.ForgotPassword"
             android:label="@string/title_activity_forgot_password"
-            android:parentActivityName=".LoginActivity">
+            android:parentActivityName="com.kennyken.ribbit.app.LoginActivity" >
+        </activity>
+        <activity
+            android:name="com.kennyken.ribbit.app.EditFriendsActivity"
+            android:label="@string/title_activity_edit_friends" >
         </activity>
     </application>
 
