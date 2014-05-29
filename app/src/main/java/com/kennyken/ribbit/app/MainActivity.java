@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 case 0:  // take picture
                     Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                    // set where to save images
+                    // get path to save images
                     mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                     if (mMediaUri == null) {
                         Toast.makeText(MainActivity.this,
@@ -75,10 +75,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                 Toast.LENGTH_LONG).show();
                     } else {
                         takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+
                         startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
                     }
                     break;
                 case 1:  // take video
+                    Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+                    if (mMediaUri == null) {
+                        Toast.makeText(MainActivity.this,
+                                R.string.external_storage_error,
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                        // limit video captures to 10 seconds / LQ
+                        takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+                        takeVideoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+
+                        startActivityForResult(takeVideoIntent, TAKE_VIDEO_REQUEST);
+                    }
                     break;
                 case 2:  // choose picture
                     break;
