@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Ribbit</string>
+    <string name="general_error">Sorry, there was an error!</string>
     <string name="title_section1">Inbox</string>
     <string name="title_section2">Friends</string>
     <string name="action_settings">Settings</string>

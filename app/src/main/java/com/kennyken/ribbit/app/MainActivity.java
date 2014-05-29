@@ -188,6 +188,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i(TAG, "Request code: "+requestCode);
+
+        if (resultCode == RESULT_OK) {
+            // add to Gallery by broadcasting Intent
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            mediaScanIntent.setData(mMediaUri);
+            sendBroadcast(mediaScanIntent);
+
+        } else if (resultCode != RESULT_CANCELED) {
+            Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void sendToLogin() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         // don't allow going back to main activity from login in back stack
