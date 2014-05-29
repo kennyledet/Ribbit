@@ -22,6 +22,8 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -49,12 +51,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public ParseUser currentUser;
 
     public static final int TAKE_PHOTO_REQUEST = 0;
-    public static final int TAKE_VIDEO_REQUEST = 0;
-    public static final int PICK_PHOTO_REQUEST = 0;
-    public static final int PICK_VIDEO_REQUEST = 0;
+    public static final int TAKE_VIDEO_REQUEST = 1;
+    public static final int PICK_PHOTO_REQUEST = 2;
+    public static final int PICK_VIDEO_REQUEST = 3;
 
     public static final int MEDIA_TYPE_IMAGE = 4;
     public static final int MEDIA_TYPE_VIDEO = 5;
+
+    public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10MB
 
     protected Uri mMediaUri;
 
@@ -96,8 +100,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                     break;
                 case 2:  // choose picture
+                    Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    choosePhotoIntent.setType("image/*");
+
+                    startActivityForResult(choosePhotoIntent, PICK_PHOTO_REQUEST);
                     break;
                 case 3:  // choose video
+                    Intent chooseVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    chooseVideoIntent.setType("video/*");
+
+                    Toast.makeText(MainActivity.this, R.string.video_limit, Toast.LENGTH_LONG).show();
+
+                    startActivityForResult(chooseVideoIntent, PICK_VIDEO_REQUEST);
                     break;
             }
         }
@@ -203,6 +217,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
+    /* Handle camera actions here */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -210,10 +225,44 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Log.i(TAG, "Request code: "+requestCode);
 
         if (resultCode == RESULT_OK) {
-            // add to Gallery by broadcasting Intent
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            mediaScanIntent.setData(mMediaUri);
-            sendBroadcast(mediaScanIntent);
+
+            if (requestCode == PICK_PHOTO_REQUEST || requestCode == PICK_VIDEO_REQUEST) {
+                if ( data == null ) {
+                    Toast.makeText(this, getString(R.string.general_error), Toast.LENGTH_LONG).show();
+                } else {
+                    mMediaUri = data.getData();
+                    Log.i(TAG, "Media URI: "+mMediaUri);
+                }
+
+
+                if ( requestCode == PICK_VIDEO_REQUEST ) {
+                    // assert file less than 10MB
+                    int fileSize = 0;
+                    InputStream input = null;
+                    try {
+                        input = getContentResolver().openInputStream(mMediaUri);
+                        fileSize = input.available();
+                    } catch (java.io.FileNotFoundException e) {
+                        Toast.makeText(this, R.string.file_error, Toast.LENGTH_LONG).show();
+                        return;
+                    } catch (IOException e) {
+                        Toast.makeText(this, R.string.file_error, Toast.LENGTH_LONG).show();
+                        return;
+                    } finally {
+                        try { input.close(); } catch (IOException e) { }
+                    }
+
+                    if ( fileSize > FILE_SIZE_LIMIT ) {
+                        Toast.makeText(this, R.string.file_too_large, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
+            } else {  // add new media to Gallery by broadcasting Intent
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                mediaScanIntent.setData(mMediaUri);
+                sendBroadcast(mediaScanIntent);
+            }
 
         } else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();
