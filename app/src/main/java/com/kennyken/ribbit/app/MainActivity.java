@@ -217,7 +217,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
-    /* Handle camera actions here */
+    /* Handle result of camera actions here */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -229,11 +229,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             if (requestCode == PICK_PHOTO_REQUEST || requestCode == PICK_VIDEO_REQUEST) {
                 if ( data == null ) {
                     Toast.makeText(this, getString(R.string.general_error), Toast.LENGTH_LONG).show();
+                    return;
                 } else {
                     mMediaUri = data.getData();
                     Log.i(TAG, "Media URI: "+mMediaUri);
                 }
-
 
                 if ( requestCode == PICK_VIDEO_REQUEST ) {
                     // assert file less than 10MB
@@ -258,11 +258,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                 }
 
-            } else {  // add new media to Gallery by broadcasting Intent
+            } else {  // add newly created media to Gallery by broadcasting Intent
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 mediaScanIntent.setData(mMediaUri);
                 sendBroadcast(mediaScanIntent);
             }
+
+            // Send user to recipients selection to send set media uri
+            Intent recipientsIntent = new Intent(this, RecipientsActivity.class);
+            recipientsIntent.setData(mMediaUri);
+            startActivity(recipientsIntent);
 
         } else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();

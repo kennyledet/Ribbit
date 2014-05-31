@@ -39,4 +39,8 @@
         <item>Choose Picture</item>
         <item>Choose Video</item>
     </string-array>
+
+    <string name="title_activity_recipients">Choose Recipients</string>
+    <string name="add_friends">Add some friends first!</string>
+
 </resources>

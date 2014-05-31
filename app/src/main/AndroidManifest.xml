@@ -6,16 +6,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
-        android:name="com.kennyken.ribbit.app.RibbitApplication"
+        android:name=".RibbitApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.kennyken.ribbit.app.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,22 +26,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kennyken.ribbit.app.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="com.kennyken.ribbit.app.SignupActivity"
+            android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.kennyken.ribbit.app.LoginActivity" > <!-- back arrow in actionbar -->
+            android:parentActivityName=".LoginActivity" > <!-- back arrow in actionbar -->
         </activity>
         <activity
-            android:name="com.kennyken.ribbit.app.ForgotPassword"
+            android:name=".ForgotPassword"
             android:label="@string/title_activity_forgot_password"
-            android:parentActivityName="com.kennyken.ribbit.app.LoginActivity" >
+            android:parentActivityName=".LoginActivity" >
         </activity>
         <activity
-            android:name="com.kennyken.ribbit.app.EditFriendsActivity"
+            android:name=".EditFriendsActivity"
             android:label="@string/title_activity_edit_friends" >
+        </activity>
+        <activity
+            android:name=".RecipientsActivity"
+            android:label="@string/title_activity_recipients" >
         </activity>
     </application>
 
