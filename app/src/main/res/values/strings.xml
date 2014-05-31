@@ -31,6 +31,7 @@
     <string name="external_storage_error">Error accessing external storage!</string>
     <string name="video_limit">The selected video must be less than 10MB!</string>
     <string name="file_error">There was a problem opening selected file!</string>
+    <string name="file_build_error">There was an error with the file selected. Please select a different file!</string>
     <string name="file_too_large">File size too large! Make sure it\'s under 10MB.</string>
 
     <string-array name="camera_choices">
@@ -44,5 +45,7 @@
     <string name="add_friends">Add some friends first!</string>
 
     <string name="menu_send_label">Send</string>
+    <string name="message_sent">Message sent!</string>
+    <string name="message_not_sent">There was an error sending your message! Please try again.</string>
 
 </resources>
