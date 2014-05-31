@@ -43,4 +43,6 @@
     <string name="title_activity_recipients">Choose Recipients</string>
     <string name="add_friends">Add some friends first!</string>
 
+    <string name="menu_send_label">Send</string>
+
 </resources>

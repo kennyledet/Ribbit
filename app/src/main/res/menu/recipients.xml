@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.kennyken.ribbit.app.RecipientsActivity" >
 
-    
-
+    <item
+        android:id="@+id/action_send"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="@string/menu_send_label"
+        android:visible="false"
+        android:icon="@drawable/ic_action_send_now"/>
 
 </menu>
