@@ -28,6 +28,7 @@
     <string name="title_activity_edit_friends">Edit Friends</string>
     <string name="users_query_error">Error getting users!</string>
     <string name="action_camera_label">Camera</string>
+    <string name="action_message_label">New Message</string>
     <string name="external_storage_error">Error accessing external storage!</string>
     <string name="video_limit">The selected video must be less than 10MB!</string>
     <string name="file_error">There was a problem opening selected file!</string>

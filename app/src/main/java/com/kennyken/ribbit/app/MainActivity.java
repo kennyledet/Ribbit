@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseAnalytics;
@@ -296,8 +297,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
 
-        // Manually set camera icon in overflow menu
+        // Manually set overflow menu icons
         menu.findItem(R.id.action_camera).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.action_new_message).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -321,6 +323,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 builder.setItems(R.array.camera_choices, mCameraDialogListener);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            case R.id.action_new_message:
+                final EditText messageField = new EditText(this);
+
+                new AlertDialog.Builder(this)
+                    .setTitle("New Message")
+                    .setView(messageField)
+                    .setPositiveButton("Choose Recipients", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String message = messageField.getText().toString();
+                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null).show();
         }
 
 
