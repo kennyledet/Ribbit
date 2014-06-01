@@ -2,7 +2,6 @@ package com.kennyken.ribbit.app;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +50,11 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
 
         String fileType = message.getString(ParseConstants.KEY_FILE_TYPE);
         int imageResource = getIconImageResource(fileType);
-        Log.i("test", "Rsrc id: " + imageResource);
-        holder.iconImageView.setImageResource(R.drawable.ic_action_picture);
+        if (imageResource == -1) {  // default to chat icon if icon can't be resolved
+            holder.iconImageView.setImageResource(R.drawable.ic_action_chat);
+        } else {
+            holder.iconImageView.setImageResource(imageResource);
+        }
         holder.nameLabel.setText(message.getString(ParseConstants.KEY_SENDER_NAME));
 
         return convertView;
@@ -73,7 +75,7 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
         } else if ( key.equals(ParseConstants.TYPE_VIDEO) ) {
             imageResource = R.drawable.ic_action_play_over_video;
         } else if ( key.equals(ParseConstants.TYPE_TEXT_MESSAGE) ) {
-            imageResource = R.drawable.ic_action_play_over_video; // temp
+            imageResource = R.drawable.ic_action_chat;
         }
         return imageResource;
     }
