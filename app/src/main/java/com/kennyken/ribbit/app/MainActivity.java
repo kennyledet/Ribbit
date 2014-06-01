@@ -61,7 +61,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10MB
 
     protected Uri mMediaUri;
-
     protected EditText messageField;
 
 
@@ -241,6 +240,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             );
         }
     }
+
 
     /* Handle result of camera actions here */
     @Override
