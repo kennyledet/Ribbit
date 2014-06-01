@@ -133,10 +133,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
 
             Intent recipientsIntent = new Intent(MainActivity.this, RecipientsActivity.class);
-            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE, ParseConstants.KEY_TEXT);
+            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE, ParseConstants.TYPE_TEXT_MESSAGE);
             recipientsIntent.putExtra(ParseConstants.KEY_TEXT, message);
             startActivity(recipientsIntent);
-
         }
     };
 
