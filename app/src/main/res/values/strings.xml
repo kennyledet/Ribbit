@@ -49,5 +49,6 @@
     <string name="message_not_sent">There was an error sending your message! Please try again.</string>
     <string name="message_empty">Message empty! Please type something in your message.</string>
     <string name="title_activity_view_image">Image Message</string>
+    <string name="text_message_title">Text Message</string>
 
 </resources>

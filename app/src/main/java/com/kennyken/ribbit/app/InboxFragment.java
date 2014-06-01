@@ -1,5 +1,6 @@
 package com.kennyken.ribbit.app;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,7 +78,13 @@ public class InboxFragment extends ListFragment {
 
         if ( messageType.equals(ParseConstants.TYPE_TEXT_MESSAGE) ) {
             // view text message
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.text_message_title)
+                    .setMessage(message.getString(ParseConstants.KEY_TEXT))
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         } else {
+            // view file-attached message
             ParseFile file = message.getParseFile(ParseConstants.KEY_FILE);
             Uri fileUri = Uri.parse(file.getUrl());
 
@@ -88,6 +95,9 @@ public class InboxFragment extends ListFragment {
                 startActivity(intent);
             } else if ( messageType.equals(ParseConstants.TYPE_VIDEO) ) {
                 // view video
+                Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
+                intent.setDataAndType(fileUri, "video/*");
+                startActivity(intent);
             }
         }
     }
