@@ -5,7 +5,6 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -54,17 +53,10 @@ public class InboxFragment extends ListFragment {
 
                 if (e == null) {
                     mMessages = messages;
-                    String[] usernames = new String[mMessages.size()];
-                    int i = 0;
-                    for (ParseObject message : mMessages) {
-                        usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
-                        i++;
-                    }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    MessageAdapter adapter = new MessageAdapter(
                             getListView().getContext(),
-                            android.R.layout.simple_list_item_1,
-                            usernames
+                            mMessages
                     );
                     setListAdapter(adapter);
                 }
