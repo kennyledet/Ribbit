@@ -47,7 +47,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      */
     ViewPager mViewPager;
 
-    //public String appName = getString(R.string.app_name);
     public String TAG = MainActivity.class.getSimpleName();
     public ParseUser currentUser;
 
@@ -62,6 +61,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10MB
 
     protected Uri mMediaUri;
+
+    protected EditText messageField;
 
 
     protected DialogInterface.OnClickListener mCameraDialogListener =
@@ -118,6 +119,30 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     };
 
+    /*
+     * Called when user types a message into new message dialog and chooses "Ok"
+     */
+    protected DialogInterface.OnClickListener mNewMessageDialogListener =
+            new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int which) {
+            String message = messageField.getText().toString();
+            if ( message.isEmpty() ) {
+                Toast.makeText(MainActivity.this, R.string.message_empty, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Intent recipientsIntent = new Intent(MainActivity.this, RecipientsActivity.class);
+            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE, ParseConstants.KEY_TEXT);
+            recipientsIntent.putExtra(ParseConstants.KEY_TEXT, message);
+            startActivity(recipientsIntent);
+
+        }
+    };
+
+    /*
+     * Build Android friendly Uri path to store a specific media type
+     */
     private Uri getOutputMediaFileUri(int mediaType) {
         if ( isExternalStorageAvailable() ) {
             // get external storage directory
@@ -314,29 +339,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 ParseUser.logOut();
                 sendToLogin();
                 return true;
+
             case R.id.action_edit_friends:
                 Intent editFriendsIntent = new Intent(this, EditFriendsActivity.class);
                 startActivity(editFriendsIntent);
                 return true;
+
             case R.id.action_camera:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setItems(R.array.camera_choices, mCameraDialogListener);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                new AlertDialog.Builder(this)
+                    .setItems(R.array.camera_choices, mCameraDialogListener)
+                    .show();
+                return true;
+
             case R.id.action_new_message:
-                final EditText messageField = new EditText(this);
+                messageField = new EditText(this);
 
                 new AlertDialog.Builder(this)
                     .setTitle("New Message")
                     .setView(messageField)
-                    .setPositiveButton("Choose Recipients", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            String message = messageField.getText().toString();
-                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, null).show();
+                    .setPositiveButton("Choose Recipients", mNewMessageDialogListener)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+
+                return true;
         }
 
 
