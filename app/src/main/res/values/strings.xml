@@ -44,10 +44,10 @@
 
     <string name="title_activity_recipients">Choose Recipients</string>
     <string name="add_friends">Add some friends first!</string>
-
     <string name="menu_send_label">Send</string>
     <string name="message_sent">Message sent!</string>
     <string name="message_not_sent">There was an error sending your message! Please try again.</string>
     <string name="message_empty">Message empty! Please type something in your message.</string>
+    <string name="title_activity_view_image">Image Message</string>
 
 </resources>

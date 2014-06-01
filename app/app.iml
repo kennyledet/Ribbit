@@ -75,6 +75,7 @@
     <orderEntry type="library" exported="" name="org.apache.commons.io-2.4" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-v13-19.1.0" level="project" />
   </component>
 </module>

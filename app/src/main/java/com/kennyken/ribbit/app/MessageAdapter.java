@@ -48,8 +48,9 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
 
         ParseObject message = mMessages.get(position);
 
-        String fileType = message.getString(ParseConstants.KEY_FILE_TYPE);
-        int imageResource = getIconImageResource(fileType);
+        String messageType = message.getString(ParseConstants.KEY_FILE_TYPE);
+        int imageResource = getIconImageResource(messageType);
+
         if (imageResource == -1) {  // default to chat icon if icon can't be resolved
             holder.iconImageView.setImageResource(R.drawable.ic_action_chat);
         } else {
