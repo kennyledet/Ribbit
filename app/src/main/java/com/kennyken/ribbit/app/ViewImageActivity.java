@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class ViewImageActivity extends Activity {
     protected ImageView mImage;
@@ -21,6 +24,15 @@ public class ViewImageActivity extends Activity {
         Uri imageUri = getIntent().getData();
 
         Picasso.with(this).load(imageUri).into(mImage);
+
+        // Time out activity after 10 seconds
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 10*1000); // 10k miliseconds = 10 seconds
     }
 
 

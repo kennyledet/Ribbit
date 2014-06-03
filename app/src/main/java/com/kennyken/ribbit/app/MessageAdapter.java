@@ -69,6 +69,12 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
         TextView nameLabel;
     }
 
+    public void refill(List<ParseObject> messages) {
+        mMessages.clear();
+        mMessages.addAll(messages);
+        notifyDataSetChanged();
+    }
+
     private int getIconImageResource(String key) {
         int imageResource = -1;
         if ( key.equals(ParseConstants.TYPE_IMAGE) ) {
