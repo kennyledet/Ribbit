@@ -29,6 +29,8 @@ public class LoginActivity extends Activity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_login);
 
+        getActionBar().hide();
+
         mUsername = (EditText) findViewById(R.id.usernameField);
         mUsername.requestFocus();
 
