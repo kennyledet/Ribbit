@@ -52,4 +52,6 @@
     <string name="text_message_title">Text Message</string>
 
     <string name="content_background_image">Background Image</string>
+    <string name="subtitle">A Snapchat Clone</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

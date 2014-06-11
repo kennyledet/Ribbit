@@ -19,34 +19,60 @@
         />
 
 
-    <EditText
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="60sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subtitle"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:id="@+id/subtitle"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/editTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/usernameField"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="@string/username_hint" />
+        android:orientation="vertical"
+        android:layout_below="@+id/subtitle">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/passwordField"
-        android:layout_below="@+id/usernameField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:password="true"
-        android:hint="@string/password_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameField"
+            android:hint="@string/username_hint"
+          />
+
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passwordField"
+            android:password="true"
+            android:hint="@string/password_hint" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:id="@+id/loginBtn"
-        android:layout_below="@+id/passwordField"
+        android:layout_below="@+id/editTextLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="fill_parent"
@@ -54,17 +80,18 @@
         android:text="@string/register"
         android:id="@+id/registerBtn"
         android:layout_below="@+id/loginBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password?"
+        android:layout_below="@id/registerBtn"
+        android:text="@string/forgot_password"
         android:id="@+id/forgotPassword"
-        android:layout_below="@+id/registerBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="78dp"
         android:clickable="true"
-        android:textColor="#ff3313ff" />
+        android:textColor="#ff3313ff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="108dp" />
+
 </RelativeLayout>
