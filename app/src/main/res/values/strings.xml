@@ -51,4 +51,5 @@
     <string name="title_activity_view_image">Image Message</string>
     <string name="text_message_title">Text Message</string>
 
+    <string name="content_background_image">Background Image</string>
 </resources>
